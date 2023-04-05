@@ -1,5 +1,6 @@
 {
   "name": "classification-api",
+  "description": "An API to classify tags or text using custom mappings and Google Cloud Natural Language API.",
   "version": "0.1.0",
   "main": "src/app.ts",
   "author": {
