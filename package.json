@@ -2,7 +2,7 @@
   "name": "classification-api",
   "description": "An API to classify tags or text using custom mappings and Google Cloud Natural Language API.",
   "version": "0.1.0",
-  "main": "src/app.ts",
+  "main": "dist/src/app.js",
   "author": {
     "name": "Jan-Henrik Hempel",
     "email": "jan@schafe-vorm-fenster.de"
@@ -12,7 +12,7 @@
   "scripts": {
     "build": "rm -Rf dist && tsc",
     "swagger": "tsoa spec",
-    "start": "node dist/index.js",
+    "start": "node dist/src/app.js",
     "dev": "concurrently \"tsc --watch\" \"nodemon -q dist/src/app.js\"",
     "test": "jest --maxWorkers=25%",
     "test:watch": "jest --watch --maxWorkers=25%"
