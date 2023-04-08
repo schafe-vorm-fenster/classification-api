@@ -30,13 +30,24 @@ export const googleNaturalLanguageClassifyText = async (
       `Execute googlenaturallanguage.calssifytext(${query.content.substring(
         0,
         20
-      )}...)`
+      )} ...)`
     );
 
     // Imports the Google Cloud client library
     const language = require("@google-cloud/language");
     // Creates a client
-    const client = new language.LanguageServiceClient();
+    const options = {
+      credentials: {
+        client_email: process.env.GOOGLEAPI_CLIENT_EMAIL,
+        private_key: process.env.GOOGLEAPI_PRIVATE_KEY,
+      },
+    };
+    if (!options.credentials.client_email || !options.credentials.private_key) {
+      throw new Error(
+        "GOOGLEAPI_CLIENT_EMAIL or GOOGLEAPI_PRIVATE_KEY is not set."
+      );
+    }
+    const client = new language.LanguageServiceClient(options);
 
     const document = {
       content: query.content,

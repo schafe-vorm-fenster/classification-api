@@ -20,10 +20,6 @@ export const mapGoogleClassificationToRuralEventCategory = (
     "/" +
     googleClassification.split("/")[3]) as GoogleNaturalLanguageL3;
 
-  console.debug("level 1: ", l1);
-  console.debug("level 2: ", l2);
-  console.debug("level 3: ", l3);
-
   const exactMatch = classificationMappings.filter(
     (mapping) => mapping.classification === l3
   )[0];

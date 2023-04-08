@@ -8,11 +8,7 @@ export const classifyByText = async (
   const classification: any = await googleNaturalLanguageClassifyTextCached({
     content: text,
   });
-  console.debug(classification);
-
   const category: RuralEventCategoryId | null =
     mapGoogleClassificationToRuralEventCategory(classification[0].name);
-
-  console.debug(category);
   return category;
 };
