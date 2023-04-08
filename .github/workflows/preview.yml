@@ -7,8 +7,10 @@ on:
     branches-ignore:
       - main
 jobs:
-  Setup:
+  Test:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -19,13 +21,6 @@ jobs:
           cache: npm
       - name: Install
         run: yarn
-
-  Test:
-    needs: Setup
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: true
-    steps:
       - name: Test
         run: yarn test:ci
 
@@ -33,7 +28,7 @@ jobs:
     needs: Test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
       - name: Pull Vercel Environment Information
