@@ -30,6 +30,12 @@ export type ClassificationResponse = RuralEventCategory | HttpErrorBody | null;
  *     responses:
  *       200:
  *         description: List of categories typed as RuralEventCategory.
+ *       400:
+ *         description: Missing body parameter.
+ *       401:
+ *         description: Unauthorized.
+ *       404:
+ *         description: No category found for the given tag.
  */
 export default async function handler(
   req: NextApiRequest,

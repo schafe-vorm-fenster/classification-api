@@ -19,6 +19,7 @@ export function middleware(req: NextRequest) {
     JSON.stringify({
       status: 401,
       message: "Unauthorized",
-    })
+    }),
+    { status: 401, headers: { "content-type": "application/json" } }
   );
 }
