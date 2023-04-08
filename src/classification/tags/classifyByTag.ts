@@ -16,7 +16,10 @@ export const classifyByTag = async (
   const ruralEventCategory: RuralEventCategoryId | null =
     await mapGoogleClassificationToRuralEventCategory(googleClassification);
   if (!ruralEventCategory)
-    throw new Error("No rural event category found for tag: " + tag);
+    throw new Error(
+      "No rural event category found for google classification: " +
+        googleClassification
+    );
 
   return ruralEventCategory;
 };
