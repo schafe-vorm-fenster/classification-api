@@ -5,6 +5,7 @@ import {
 } from "./googleNaturalLanguageClassifyText";
 import getUuidByString from "uuid-by-string";
 import { localCache, remoteDatabaseCache } from "../../../cache/cachemanager";
+import { getLogger } from "../../../../logging/log-util";
 
 /**
  * Use a two layer cache.
@@ -14,24 +15,25 @@ import { localCache, remoteDatabaseCache } from "../../../cache/cachemanager";
 const memoryCached = async (
   query: GoogleNaturalLanguageClassifyTextQuery
 ): Promise<GoogleNaturalLanguageClassifyTextResponse> => {
+  const log = getLogger("googlenaturallanguage.calssifytext");
   try {
     const cacheKey =
       "googlenaturallanguage_classifytext_" + getUuidByString(query.content);
-    console.debug(`[Cache] Check local cache for ${cacheKey}.`);
+    log.debug(`[Cache] Check local cache for ${cacheKey}.`);
     return localCache.wrap(cacheKey, function () {
       try {
-        console.debug(`[Cache] Check remote cache for ${cacheKey}.`);
+        log.debug(`[Cache] Check remote cache for ${cacheKey}.`);
         return remoteDatabaseCache.wrap(cacheKey, function () {
-          console.info(`[Cache] Fetch original data for ${cacheKey}.`);
+          log.info(`[Cache] Fetch original data for ${cacheKey}.`);
           return googleNaturalLanguageClassifyText(query);
         });
-      } catch (error) {
-        console.error((error as Error).message);
+      } catch (error: Error | any) {
+        log.error(error, error?.message);
         throw error;
       }
     });
-  } catch (error) {
-    console.error((error as Error).message);
+  } catch (error: Error | any) {
+    log.error(error, error?.message);
     return null;
   }
 };

@@ -6,6 +6,7 @@ import {
 import { classifyByTag } from "../../../../src/classification/tags/classifyByTag";
 import { ruralEventCategories } from "../../../../packages/rural-event-categories/src/types/ruralEventCategory";
 import { HttpErrorBody } from "../../../../src/errors/error.types";
+import { getLogger } from "../../../../logging/log-util";
 
 // define response type
 export type ClassificationResponse = RuralEventCategory | HttpErrorBody | null;
@@ -40,6 +41,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ClassificationResponse>
 ) {
+  const log = getLogger("api.classify.bytag");
   const { tag } = req.query;
 
   if (!tag)
@@ -52,18 +54,17 @@ export default async function handler(
   let categoryByTag: RuralEventCategoryId | null = null;
   try {
     categoryByTag = await classifyByTag(tag as string);
-  } catch (error) {
-    // handle error as 404
-    console.error(error);
+  } catch (error: Error | any) {
+    log.warn(error, error?.message);
   }
 
   if (!categoryByTag) {
     const message: string = `no category found for tag "${tag}"`;
-    console.debug(message);
+    log.info(message);
     return res.status(404).json({ status: 404, message: message });
   }
 
-  console.debug(`category "${categoryByTag}" found for tag "${tag}"`);
+  log.debug(`category "${categoryByTag}" found for tag "${tag}"`);
   const fullCategory: RuralEventCategory = ruralEventCategories.find(
     (category) => category.id === categoryByTag
   ) as RuralEventCategory;

@@ -1,4 +1,5 @@
 import { without } from "lodash";
+import { getLogger } from "../../../../logging/log-util";
 
 export type GoogleNaturalLanguageClassifyTextQuery = {
   content: string;
@@ -25,8 +26,9 @@ interface ApiResponse {
 export const googleNaturalLanguageClassifyText = async (
   query: GoogleNaturalLanguageClassifyTextQuery
 ): Promise<GoogleNaturalLanguageClassifyTextResponse> => {
+  const log = getLogger("googlenaturallanguage.calssifytext");
   try {
-    console.debug(
+    log.debug(
       `Execute googlenaturallanguage.calssifytext(${query.content.substring(
         0,
         20
@@ -66,8 +68,8 @@ export const googleNaturalLanguageClassifyText = async (
     } else {
       throw new Error("No categories found.");
     }
-  } catch (error) {
-    console.error((error as Error).message);
+  } catch (error: Error | any) {
+    log.error(error, error?.message);
     return null;
   }
 };

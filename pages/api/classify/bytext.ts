@@ -6,6 +6,7 @@ import {
 import { ruralEventCategories } from "../../../packages/rural-event-categories/src/types/ruralEventCategory";
 import { HttpErrorBody } from "../../../src/errors/error.types";
 import { classifyByText } from "../../../src/classification/naturallanguage/classifyByText";
+import { getLogger } from "../../../logging/log-util";
 
 // define response type
 export type ClassificationResponse = RuralEventCategory | HttpErrorBody | null;
@@ -41,6 +42,8 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ClassificationResponse>
 ) {
+  const log = getLogger("api.classify.bytext");
+
   const text = <string>req.body;
 
   if (!text)
@@ -55,18 +58,17 @@ export default async function handler(
   let categoryByText: RuralEventCategoryId | null = null;
   try {
     categoryByText = await classifyByText(text);
-  } catch (error) {
-    // handle error as 404
-    console.error(error);
+  } catch (error: Error | any) {
+    log.warn(error, error?.message);
   }
 
   if (!categoryByText) {
     const message: string = `no category found for text "${shortText}"`;
-    console.debug(message);
+    log.info(message);
     return res.status(404).json({ status: 404, message: message });
   }
 
-  console.debug(`category "${categoryByText}" found for text "${shortText}"`);
+  log.debug(`category "${categoryByText}" found for text "${shortText}"`);
   const fullCategory: RuralEventCategory = ruralEventCategories.find(
     (category) => category.id === categoryByText
   ) as RuralEventCategory;
