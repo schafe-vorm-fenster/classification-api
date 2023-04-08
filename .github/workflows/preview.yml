@@ -7,7 +7,7 @@ on:
     branches-ignore:
       - main
 jobs:
-  Test:
+  Check:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
@@ -32,8 +32,8 @@ jobs:
       - name: Build
         run: yarn build
 
-  Deploy-Preview:
-    needs: Test
+  Preview-Deployment:
+    needs: Check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
