@@ -7,7 +7,6 @@ export const config = {
 
 export function middleware(req: NextRequest) {
   const token = req.headers.get("Sheep-Token");
-  const url = req.nextUrl;
   const allowedTokens: String[] | undefined = process.env.ALLOWED_TOKENS?.split(
     ","
   ).map((t) => t.trim());
