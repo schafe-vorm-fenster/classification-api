@@ -7,7 +7,7 @@ describe("should map certain tags to google classification", () => {
     );
   });
 
-  test("should return '/Law & Government' for joba and care tags", async () => {
+  test("should return '/Law & Government' for jobs and care tags", async () => {
     expect(mapTagToGoogleClassification("Gremien")).toBe(
       "/Law & Government/Government"
     );
@@ -32,5 +32,9 @@ describe("should map certain tags to google classification", () => {
     expect(mapTagToGoogleClassification("Restmüll")).toBe(
       "/Law & Government/Social Services"
     );
+  });
+
+  test("should map case insensitive", async () => {
+    expect(mapTagToGoogleClassification("öPnV")).toBe("/Travel/Bus & Rail");
   });
 });

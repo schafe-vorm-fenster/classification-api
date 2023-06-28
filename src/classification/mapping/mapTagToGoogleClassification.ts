@@ -6,8 +6,12 @@ import {
 export const mapTagToGoogleClassification = (
   tag: string
 ): GoogleNaturalLanguageClassification | null => {
+  // lookup categoryMappings by given tag case insensitive
   const categoryMapping = categoryMappings.filter(
-    (categoryMapping) => categoryMapping.tags.indexOf(tag) >= 0
+    (categoryMapping) =>
+      categoryMapping.tags
+        .map((tag) => tag.toLowerCase())
+        .indexOf(tag.toLowerCase()) >= 0
   )[0];
 
   if (categoryMapping) {

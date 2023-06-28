@@ -7,9 +7,18 @@ import { classifyByTag } from "../../../../src/classification/tags/classifyByTag
 import { ruralEventCategories } from "../../../../packages/rural-event-categories/src/types/ruralEventCategory";
 import { HttpErrorBody } from "../../../../src/errors/error.types";
 import { getLogger } from "../../../../logging/log-util";
+import { GoogleNaturalLanguageClassification } from "../../../../src/classification/mapping/mapTagToGoogleClassification.mapping";
 
 // define response type
-export type ClassificationResponse = RuralEventCategory | HttpErrorBody | null;
+export interface RuralEventClassification {
+  category: RuralEventCategoryId;
+  tags: string[];
+  classifications: GoogleNaturalLanguageClassification[];
+}
+export type ClassificationResponse =
+  | RuralEventClassification
+  | HttpErrorBody
+  | null;
 
 /**
  * @swagger
@@ -29,7 +38,7 @@ export type ClassificationResponse = RuralEventCategory | HttpErrorBody | null;
  *       - application/json
  *     responses:
  *       200:
- *         description: Category for the given tag.
+ *         description: Classification for the given tag typed as RuralEventClassification.
  *       400:
  *         description: Missing tag parameter.
  *       401:
@@ -51,23 +60,22 @@ export default async function handler(
     });
 
   // classify by tags
-  let categoryByTag: RuralEventCategoryId | null = null;
+  let classificationByTag: RuralEventClassification | null = null;
   try {
-    categoryByTag = await classifyByTag(tag as string);
+    classificationByTag = await classifyByTag(tag as string);
   } catch (error: Error | any) {
     log.warn(error, error?.message);
   }
 
-  if (!categoryByTag) {
+  if (!classificationByTag) {
     const message: string = `no category found for tag "${tag}"`;
     log.info(message);
     return res.status(404).json({ status: 404, message: message });
   }
 
-  log.debug(`category "${categoryByTag}" found for tag "${tag}"`);
-  const fullCategory: RuralEventCategory = ruralEventCategories.find(
-    (category) => category.id === categoryByTag
-  ) as RuralEventCategory;
+  log.debug(
+    `category "${classificationByTag.category}" found for tag "${tag}"`
+  );
 
   // add cache header to allow cdn caching of responses
   const cacheMaxAge: string = process.env.CACHE_MAX_AGE || "604800"; // 7 days
@@ -78,5 +86,5 @@ export default async function handler(
     `max-age=${cacheMaxAge}, s-maxage=${cacheMaxAge}, stale-while-revalidate=${cacheStaleWhileRevalidate}`
   );
 
-  return res.status(200).json(fullCategory);
+  return res.status(200).json(classificationByTag);
 }

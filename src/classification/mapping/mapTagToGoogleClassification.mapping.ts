@@ -98,4 +98,9 @@ export const categoryMappings: categoryMapping[] = [
     section: "/Law & Government",
     classification: "/Law & Government/Social Services",
   },
+  {
+    tags: ["Bus", "Bahn", "Verkehr", "ÖPNV"],
+    section: "/Travel",
+    classification: "/Travel/Bus & Rail",
+  },
 ];
