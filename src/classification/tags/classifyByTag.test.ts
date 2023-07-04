@@ -52,4 +52,20 @@ describe("should find a classification?.category for certain tags", () => {
       "/Arts & Entertainment/Events & Listings/Concerts & Music Festivals"
     );
   });
+
+  test("should return null for non existing tag", async () => {
+    const tag = "SomethingStrange";
+    const classification: RuralEventClassification | null = await classifyByTag(
+      tag
+    );
+    expect(classification).toBeNull();
+  });
+
+  test("should return null for non existing classification mapping for existing tag mapping", async () => {
+    const tag = "Bordell";
+    const classification: RuralEventClassification | null = await classifyByTag(
+      tag
+    );
+    expect(classification).toBeNull();
+  });
 });

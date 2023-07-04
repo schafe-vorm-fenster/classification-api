@@ -12,13 +12,19 @@ export const mapGoogleClassificationToRuralEventCategory = (
 ): RuralEventCategoryId | null => {
   const l1: GoogleNaturalLanguageL1 = ("/" +
     googleClassification.split("/")[1]) as GoogleNaturalLanguageL1;
-  const l2: GoogleNaturalLanguageL2 = (l1 +
-    "/" +
-    googleClassification.split("/")[2]) as GoogleNaturalLanguageL2;
-  const l3: GoogleNaturalLanguageL3 = (l1 +
-    l2 +
-    "/" +
-    googleClassification.split("/")[3]) as GoogleNaturalLanguageL3;
+
+  const l2: GoogleNaturalLanguageL2 | null = googleClassification.split("/")[2]
+    ? ((l1 +
+        "/" +
+        googleClassification.split("/")[2]) as GoogleNaturalLanguageL2)
+    : null;
+
+  const l3: GoogleNaturalLanguageL3 | null =
+    l2 && googleClassification.split("/")[3]
+      ? ((l2 +
+          "/" +
+          googleClassification.split("/")[3]) as GoogleNaturalLanguageL3)
+      : null;
 
   const exactMatch = classificationMappings.filter(
     (mapping) => mapping.classification === l3

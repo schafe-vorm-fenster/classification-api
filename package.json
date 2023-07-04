@@ -15,7 +15,7 @@
     "lint": "next lint",
     "test": "jest --maxWorkers=25%",
     "test:watch": "jest --watch --maxWorkers=25%",
-    "test:ci": "jest --runInBand --ci"
+    "test:ci": "jest --runInBand --ci --coverage"
   },
   "dependencies": {
     "@google-cloud/language": "^5.2.1",

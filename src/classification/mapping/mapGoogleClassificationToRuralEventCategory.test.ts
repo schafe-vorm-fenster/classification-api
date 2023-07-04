@@ -27,9 +27,30 @@ describe("should find a category for certain google classifications", () => {
     ).toBe("everyday-supply");
   });
 
+  test("should return correct category for a 3rd level match", async () => {
+    expect(
+      await mapGoogleClassificationToRuralEventCategory(
+        "/Business & Industrial/Hospitality Industry/Event Planning"
+      )
+    ).toBe("culture-tourism");
+    expect(
+      await mapGoogleClassificationToRuralEventCategory(
+        "/Business & Industrial/Hospitality Industry/Food Service"
+      )
+    ).toBe("everyday-supply");
+  });
+
   test("should return 'culture-tourism' for event tags", async () => {
     expect(
       await mapGoogleClassificationToRuralEventCategory("/Arts & Entertainment")
     ).toBe("culture-tourism");
+  });
+
+  test("should return null for no match", async () => {
+    expect(
+      await mapGoogleClassificationToRuralEventCategory(
+        "/Something Strange" as any
+      )
+    ).toBeNull();
   });
 });

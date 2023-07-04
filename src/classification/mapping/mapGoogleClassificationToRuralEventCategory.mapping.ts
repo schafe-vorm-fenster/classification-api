@@ -11,6 +11,15 @@ export const classificationMappings: ClassificationMapping[] = [
     classification: "/Law & Government/Social Services",
     category: "everyday-supply",
   },
+  {
+    classification:
+      "/Business & Industrial/Hospitality Industry/Event Planning",
+    category: "culture-tourism",
+  },
+  {
+    classification: "/Business & Industrial/Hospitality Industry/Food Service",
+    category: "everyday-supply",
+  },
   { classification: "/Travel/Bus & Rail", category: "everyday-supply" },
   { classification: "/Arts & Entertainment", category: "culture-tourism" },
   { classification: "/Business & Industrial", category: "everyday-supply" },

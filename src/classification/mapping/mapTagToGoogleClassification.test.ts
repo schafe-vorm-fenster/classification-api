@@ -37,4 +37,8 @@ describe("should map certain tags to google classification", () => {
   test("should map case insensitive", async () => {
     expect(mapTagToGoogleClassification("öPnV")).toBe("/Travel/Bus & Rail");
   });
+
+  test("should return null for no match", async () => {
+    expect(mapTagToGoogleClassification("CreapyTag")).toBeNull();
+  });
 });

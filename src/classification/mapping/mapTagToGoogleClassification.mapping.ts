@@ -103,4 +103,9 @@ export const categoryMappings: categoryMapping[] = [
     section: "/Travel",
     classification: "/Travel/Bus & Rail",
   },
+  {
+    tags: ["Bordell"],
+    section: "/Adult",
+    classification: "/Adult",
+  },
 ];
