@@ -1,5 +1,5 @@
 const logLevelData = {
-  "*": "warn",
+  "*": "debug",
   "api.classify.bytext": "debug",
   "api.classify.bytag": "debug",
 };

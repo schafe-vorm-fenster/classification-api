@@ -1,12 +1,13 @@
 import { without } from "lodash";
 import { getLogger } from "../../../../logging/log-util";
+import { GoogleNaturalLanguageClassification } from "../../mapping/mapTagToGoogleClassification.mapping";
 
 export type GoogleNaturalLanguageClassifyTextQuery = {
   content: string;
 };
 
 export interface GoogleNaturalLanguageClassificationCategory {
-  name: string;
+  name: GoogleNaturalLanguageClassification;
   confidence: number;
 }
 

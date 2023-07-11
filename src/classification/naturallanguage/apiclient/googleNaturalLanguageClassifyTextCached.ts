@@ -12,7 +12,7 @@ import { getLogger } from "../../../../logging/log-util";
  * @param query: GoogleNaturalLanguageClassifyTextQuery
  * @returns GoogleNaturalLanguageClassifyTextResponse
  */
-const memoryCached = async (
+export const memoryCached = async (
   query: GoogleNaturalLanguageClassifyTextQuery
 ): Promise<GoogleNaturalLanguageClassifyTextResponse> => {
   const log = getLogger("googlenaturallanguage.calssifytext");

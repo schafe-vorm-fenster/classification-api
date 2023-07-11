@@ -1,4 +1,4 @@
-import { RuralEventClassification } from "../../../pages/api/classify/bytag/[tag]";
+import { RuralEventClassification } from "../../types/api.types";
 import { classifyByTag } from "./classifyByTag";
 
 // unit tests for classifyByTags
@@ -28,13 +28,13 @@ describe("should find a classification?.category for certain tags", () => {
   });
 
   test("should return 'everyday-supply' for shopping and waste tags", async () => {
-    const tag = "Restmüll";
+    const tag = "rEstmüll";
     const classification: RuralEventClassification | null = await classifyByTag(
       tag
     );
+    expect(classification?.tags).toEqual(["Restmüll"]);
     expect(classification?.category).not.toBeNull();
     expect(classification?.category).toBe("everyday-supply");
-    expect(classification?.tags).toContain(tag);
     expect(classification?.classifications).toContain(
       "/Law & Government/Social Services"
     );

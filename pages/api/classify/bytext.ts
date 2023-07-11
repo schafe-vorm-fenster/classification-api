@@ -1,15 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import {
-  RuralEventCategory,
-  RuralEventCategoryId,
-} from "../../../packages/rural-event-categories/src/types/ruralEventCategory.types";
-import { ruralEventCategories } from "../../../packages/rural-event-categories/src/types/ruralEventCategory";
-import { HttpErrorBody } from "../../../src/errors/error.types";
 import { classifyByText } from "../../../src/classification/naturallanguage/classifyByText";
 import { getLogger } from "../../../logging/log-util";
-
-// define response type
-export type ClassificationResponse = RuralEventCategory | HttpErrorBody | null;
+import { tagsFromText } from "../../../src/classification/helpers/tagsFromText";
+import {
+  ClassificationResponse,
+  RuralEventClassification,
+} from "../../../src/types/api.types";
 
 /**
  * @swagger
@@ -55,7 +51,7 @@ export default async function handler(
   const shortText: string = text.split(" ").slice(0, 6).join(" ") + " ...";
 
   // classify by text
-  let categoryByText: RuralEventCategoryId | null = null;
+  let categoryByText: RuralEventClassification | null = null;
   try {
     categoryByText = await classifyByText(text);
   } catch (error: Error | any) {
@@ -69,9 +65,9 @@ export default async function handler(
   }
 
   log.debug(`category "${categoryByText}" found for text "${shortText}"`);
-  const fullCategory: RuralEventCategory = ruralEventCategories.find(
-    (category) => category.id === categoryByText
-  ) as RuralEventCategory;
+
+  // set tags if available
+  categoryByText.tags = tagsFromText(text) || categoryByText.tags || [];
 
   // add cache header to allow cdn caching of responses
   const cacheMaxAge: string = process.env.CACHE_MAX_AGE || "604800"; // 7 days
@@ -82,5 +78,5 @@ export default async function handler(
     `max-age=${cacheMaxAge}, s-maxage=${cacheMaxAge}, stale-while-revalidate=${cacheStaleWhileRevalidate}`
   );
 
-  return res.status(200).json(fullCategory);
+  return res.status(200).json(categoryByText);
 }

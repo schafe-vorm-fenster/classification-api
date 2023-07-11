@@ -1,6 +1,7 @@
 import { getLogger } from "../../../logging/log-util";
 import { RuralEventCategoryId } from "../../../packages/rural-event-categories/src/types/ruralEventCategory.types";
-import { RuralEventClassification } from "../../../pages/api/classify/bytag/[tag]";
+import { RuralEventClassification } from "../../types/api.types";
+import { getTag } from "../helpers/getTag";
 import { mapGoogleClassificationToRuralEventCategory } from "../mapping/mapGoogleClassificationToRuralEventCategory";
 import { mapTagToGoogleClassification } from "../mapping/mapTagToGoogleClassification";
 import { GoogleNaturalLanguageClassification } from "../mapping/mapTagToGoogleClassification.mapping";
@@ -31,7 +32,7 @@ export const classifyByTag = async (
 
   const result: RuralEventClassification = {
     category: ruralEventCategory,
-    tags: [tag],
+    tags: [getTag(tag) || tag],
     classifications: [googleClassification],
   };
   return result;
