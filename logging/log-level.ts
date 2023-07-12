@@ -1,7 +1,5 @@
 const logLevelData = {
-  "*": "debug",
-  "api.classify.bytext": "debug",
-  "api.classify.bytag": "debug",
+  "*": "info",
 };
 
 export default logLevelData;

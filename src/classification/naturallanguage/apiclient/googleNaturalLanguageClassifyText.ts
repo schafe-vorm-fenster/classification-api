@@ -29,12 +29,7 @@ export const googleNaturalLanguageClassifyText = async (
 ): Promise<GoogleNaturalLanguageClassifyTextResponse> => {
   const log = getLogger("googlenaturallanguage.calssifytext");
   try {
-    log.debug(
-      `Execute googlenaturallanguage.calssifytext(${query.content.substring(
-        0,
-        20
-      )} ...)`
-    );
+    log.debug({ query: query }, "Execute googlenaturallanguage.calssifytext");
 
     // Imports the Google Cloud client library
     const language = require("@google-cloud/language");
@@ -59,12 +54,21 @@ export const googleNaturalLanguageClassifyText = async (
     const data: any = await client.classifyText({
       document,
     });
+    log.debug(
+      { query: query, document: document, result: data },
+      "Got response from googlenaturallanguage.calssifytext"
+    );
 
     const categories: GoogleNaturalLanguageClassificationCategory[] = <
       GoogleNaturalLanguageClassificationCategory[]
     >without(<any[]>data[0].categories, null, undefined);
 
     if (categories?.length > 0) {
+      log.info(
+        { query: query, categories: categories },
+        "Got categories by googlenaturallanguage.calssifytext"
+      );
+
       return categories;
     } else {
       throw new Error("No categories found.");
