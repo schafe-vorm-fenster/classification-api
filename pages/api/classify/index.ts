@@ -12,10 +12,10 @@ import {
 
 /**
  * @swagger
- * /api/classify/:
+ * /api/classify/?tags={tags}&text={text}:
  *   get:
- *     summary: Returns a category for a given tag.
- *     description: Evaluates a tag based on some mapping definitions and returns a category.
+ *     summary: Returns a classification for a text and/or tags.
+ *     description: Uses tags from tags parameter and extracted from the text to evaluate a combined classification based on a mapping definition. If no tags are included, a classification is evaluated by a ai service based on the given text. One combined classification is returned.
  *     tags:
  *       - Classify
  *     parameters:
@@ -25,7 +25,7 @@ import {
  *         required: false
  *         type: string
  *       - name: text
- *         description: Text as string.
+ *         description: Text as string. Might contain tags as hash tags e.g. #tag1 #tag2.
  *         in: query
  *         required: false
  *         type: string
@@ -39,7 +39,7 @@ import {
  *       401:
  *         description: Unauthorized.
  *       404:
- *         description: No category found for the given tag.
+ *         description: No classification found for the given tags or text.
  */
 export default async function handler(
   req: NextApiRequest,

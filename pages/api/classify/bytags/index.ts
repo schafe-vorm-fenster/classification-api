@@ -10,10 +10,10 @@ import {
 
 /**
  * @swagger
- * /api/classify/bytags:
+ * /api/classify/bytags/?tags={tags}:
  *   get:
- *     summary: Returns a category for a given tag.
- *     description: Evaluates a tag based on some mapping definitions and returns a category.
+ *     summary: Returns a classification for a given list of tags.
+ *     description: Evaluates all given tags based on a mapping definition and returns a classification. If several tags are matching different classifications, one combined classification is returned.
  *     tags:
  *       - Classify
  *     parameters:
@@ -32,7 +32,7 @@ import {
  *       401:
  *         description: Unauthorized.
  *       404:
- *         description: No category found for the given tag.
+ *         description: No classification found for the given tag.
  */
 export default async function handler(
   req: NextApiRequest,
