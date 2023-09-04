@@ -96,13 +96,13 @@ export default async function handler(
   };
 
   // add cache header to allow cdn caching of responses
-  const cacheMaxAge: string = process.env.CACHE_MAX_AGE || "604800"; // 7 days
-  const cacheStaleWhileRevalidate: string =
-    process.env.CACHE_STALE_WHILE_REVALIDATE || "120"; // 2 minutes
-  res.setHeader(
-    "Cache-Control",
-    `max-age=${cacheMaxAge}, s-maxage=${cacheMaxAge}, stale-while-revalidate=${cacheStaleWhileRevalidate}`
-  );
+  // const cacheMaxAge: string = process.env.CACHE_MAX_AGE || "604800"; // 7 days
+  // const cacheStaleWhileRevalidate: string =
+  //   process.env.CACHE_STALE_WHILE_REVALIDATE || "120"; // 2 minutes
+  // res.setHeader(
+  //   "Cache-Control",
+  //   `max-age=${cacheMaxAge}, s-maxage=${cacheMaxAge}, stale-while-revalidate=${cacheStaleWhileRevalidate}`
+  // );
 
   return res.status(200).json(typedResult);
 }
