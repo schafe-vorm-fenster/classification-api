@@ -104,5 +104,7 @@ export default async function handler(
   //   `max-age=${cacheMaxAge}, s-maxage=${cacheMaxAge}, stale-while-revalidate=${cacheStaleWhileRevalidate}`
   // );
 
-  return res.status(200).json(typedResult);
+  return res
+    .status(200)
+    .json(typedResult || { category: "unknown", scope: "nearby" });
 }
