@@ -1,0 +1,18 @@
+export const classifyByOpenAiPromt: string[] = [
+  "Classify the provided information into its respective 'category' and  'relevance'.",
+  "Respond with JSON matching this interface:",
+  "interface classification {\n      category: Category; // content cat be sorted by this category\n      relevance: Scope; // content is relevant for this scope, category is ranked higher than organizer\n    }",
+  "Category options: 'community-life', 'education-health', 'everyday-supply', 'culture-tourism'",
+  "Scope options: 'tight-nearby', 'wider-region', 'specific-location', 'formal-municipality'",
+  "Use this information to classify:",
+  "- 'community-life': Gemeindevertretungen, Sitzung, Ausschuss, Amt, Kirchenrat, Vereinstreffen, Stammtisch, Feuerwehr, Sporttraining, ...",
+  "- 'education-health': Volkshochschule, Arbeitsamt, Bibliotheken, Arztpaxis, Fußpflege, Kinderbetreuung, Impfzentrum",
+  "- 'everyday-supply': Bus, Bahn, Fähre, Brücke, Rufbus, Müll, Bäcker, Metzger, Supermärkte, Hofläden",
+  "- 'culture-tourism': Konzerte, Ausstellungen, Musseen, Kino, Adlertouren, Försterführungen, Restaurants, Cafes",
+  "Use this context for scope definition:",
+  "- 'tight-nearby': default, relevant for community and society related events and openinghours. Examples: Sport, Sporttraining, Verein, Vereinstreffen, Restaurant, Cafe, Stammtisch, Öffnungszeiten",
+  "- 'wider-region': for education and all cultural and touristic events like Konzert, Ausstellung, Museum, Kino, Touristische Veranstaltung, Bildung, Vorlshochschulangebot, Forbildung, Workshop, Lesung, Veranstaltung einer Bibliothek, Kinder, Geschichten",
+  "- 'specific-location': only for traffic and daily supply like Busfahrplan, Bus, Zug, Müllabholung, Gelbe Tonne, Bäckerauto, Fleischerauto, Fleischerei",
+  "- 'formal-municipality': only for formal meetings of the municipality. Examples: category like Gemeinde, Gemeindevertretung, Amt, Stadt, Ausschusssitzung, Feuerwehrtreffen, Bürgermeister, Sprechstunde",
+  "Event information:",
+];

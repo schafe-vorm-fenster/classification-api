@@ -1,5 +1,5 @@
 const logLevelData = {
-  "*": "info",
+  "*": "debug",
 };
 
 export default logLevelData;
