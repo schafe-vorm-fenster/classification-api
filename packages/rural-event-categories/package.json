@@ -23,7 +23,7 @@
   "bugs": {
     "url": "https://github.com/schafevormfenster/events-api/issues"
   },
-  "homepage": "https://github.com/schafevormfenster/events-api/tree/master/packages/rural-event-types#readme",
+  "homepage": "https://github.com/schafevormfenster/events-api/tree/main/packages/rural-event-types#readme",
   "files": [
     "dist/*",
     "src/**/*"
