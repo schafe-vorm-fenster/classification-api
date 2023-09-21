@@ -1,34 +1,24 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { getLogger } from "../../../../logging/log-util";
-import { classifyByOpenAi } from "../../../../src/openai/classifyByOpenAi";
-import { OpenAiClassification } from "../../../../src/openai/openAiClassification.types";
-import { RuralEventCategory } from "../../../../packages/rural-event-categories/src/types/ruralEventCategory.types";
-import { RuralEventScope } from "../../../../packages/rural-event-categories/src/types/ruralEventScopes";
-
-interface Classification {
-  category: RuralEventCategory;
-  scope: RuralEventScope;
-}
+import { getLogger } from "../../../logging/log-util";
+import { OpenAiClassification } from "../../../src/openai/openAiClassification.types";
+import { RuralEventCategoryId } from "../../../packages/rural-event-categories/src/types/ruralEventCategory.types";
+import { RuralEventScope } from "../../../packages/rural-event-categories/src/types/ruralEventScopes";
+import { classifyByOpenAiCached } from "../../../src/openai/classifyByOpenAi.cached";
+import { RuralEventClassification } from "../../../src/types/api.types";
 
 /**
  * @swagger
- * /api/classify/byobject/{hash}:
+ * /api/classify/byobject:
  *   post:
  *     summary: Returns a classification and a scopification for a json object.
  *     description: Based on an incoming json object, a classification and a scopification is returned. For both the open ai api is used to get best results.
  *     tags:
  *       - Classify
- *     parameters:
- *       - name: hash
- *         description: Hash of the content to allow post request caching.
- *         in: path
- *         required: true
- *         type: string
  *     produces:
  *       - application/json
  *     responses:
  *       200:
- *         description: Classification and scopification typed as Classification.
+ *         description: Classification and scopification typed as RuralEventClassification.
  *       400:
  *         description: Missing body or parameters.
  *       401:
@@ -38,35 +28,29 @@ interface Classification {
  */
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Classification>
+  res: NextApiResponse<RuralEventClassification>
 ) {
   const log = getLogger("api.classify.byobject");
-  const { hash } = req.query;
 
   // check if POST request
-  if (req.method !== "POST")
+  if (req.method !== "POST") {
+    log.warn("Incoming request method was not POST.");
     return res.status(400).end("Please use a POST request.");
-
-  // check for hash
-  if (!hash)
-    return res
-      .status(400)
-      .end(
-        "Please provide a hash of the content to classify. This allows caching of the result."
-      );
+  }
 
   // check if body has any value
   const body: object = req.body;
-  if (!body || typeof body !== "object")
+  if (!body || typeof body !== "object") {
+    log.warn("Incoming request body was empty or not an object.");
     return res.status(400).end("Please provide a json object to classify.");
-
-  log.debug("body", body);
+  }
 
   const openAiClassification: OpenAiClassification | null =
-    await classifyByOpenAi(body);
+    await classifyByOpenAiCached(body);
 
   // return error if no response
   if (!openAiClassification) {
+    log.warn({ request: body }, "No classification found.");
     return res.status(404).end("No classification found.");
   }
 
@@ -90,19 +74,17 @@ export default async function handler(
   }
 
   // convert from OpenAiClassification to Classification
-  const typedResult: Classification = {
-    category: openAiClassification.category as unknown as RuralEventCategory,
+  const typedResult: RuralEventClassification = {
+    category: openAiClassification.category as unknown as RuralEventCategoryId,
+    tags: [],
     scope: mappedScope as RuralEventScope,
   };
 
-  // add cache header to allow cdn caching of responses
-  // const cacheMaxAge: string = process.env.CACHE_MAX_AGE || "604800"; // 7 days
-  // const cacheStaleWhileRevalidate: string =
-  //   process.env.CACHE_STALE_WHILE_REVALIDATE || "120"; // 2 minutes
-  // res.setHeader(
-  //   "Cache-Control",
-  //   `max-age=${cacheMaxAge}, s-maxage=${cacheMaxAge}, stale-while-revalidate=${cacheStaleWhileRevalidate}`
-  // );
+  // store some log infos
+  log.debug({
+    request: body,
+    response: typedResult || { category: "unknown", tags: [], scope: "nearby" },
+  });
 
   return res
     .status(200)

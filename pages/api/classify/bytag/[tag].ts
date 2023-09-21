@@ -54,13 +54,18 @@ export default async function handler(
   }
 
   if (!classificationByTag) {
-    const message: string = `no category found for tag "${tag}"`;
-    log.info(message);
+    const message: string = `No category found for tag "${tag}"`;
+    log.info({ tag: tag }, "No category found for tag");
     return res.status(404).json({ status: 404, message: message });
   }
 
   log.debug(
-    `category "${classificationByTag.category}" found for tag "${tag}"`
+    {
+      tag: tag,
+      category: classificationByTag.category,
+      scope: classificationByTag.scope,
+    },
+    "Category found for tag."
   );
 
   // add cache header to allow cdn caching of responses

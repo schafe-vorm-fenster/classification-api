@@ -14,13 +14,6 @@ export const groupClassifications = (
         existingClassification.tags = Array.from(
           new Set([...existingClassification.tags, ...classification.tags])
         );
-        // join classifications but with unique entries
-        existingClassification.classifications = Array.from(
-          new Set([
-            ...existingClassification.classifications,
-            ...classification.classifications,
-          ])
-        );
       } else {
         acc.push(classification);
       }

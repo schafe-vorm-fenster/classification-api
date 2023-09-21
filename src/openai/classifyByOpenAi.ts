@@ -1,17 +1,15 @@
-import Axios from "axios";
-import { setupCache } from "axios-cache-interceptor";
+import axios from "axios";
 import { getLogger } from "../../logging/log-util";
-import { OpenAiClassification } from "./openAiClassification.types";
+import {
+  OpenAiClassification,
+  OpenAiQuery,
+} from "./openAiClassification.types";
 import { classifyByOpenAiPromt } from "./classifyByOpenAi.promt";
 
 export const classifyByOpenAi = async (
-  content: object
+  content: OpenAiQuery
 ): Promise<OpenAiClassification | null> => {
   const log = getLogger("classifyByOpenAi");
-
-  // setup axios-cache-interceptor
-  // TODO: define a proper cache maybe by mongoose?
-  const axios = setupCache(Axios);
 
   // combine promt and content
   const fullChatPromt: string =

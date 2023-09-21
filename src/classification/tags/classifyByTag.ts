@@ -1,8 +1,8 @@
 import { getLogger } from "../../../logging/log-util";
-import { RuralEventCategoryId } from "../../../packages/rural-event-categories/src/types/ruralEventCategory.types";
 import { RuralEventClassification } from "../../types/api.types";
 import { getTag } from "../helpers/getTag";
 import { mapGoogleClassificationToRuralEventCategory } from "../mapping/mapGoogleClassificationToRuralEventCategory";
+import { ClassificationMapping } from "../mapping/mapGoogleClassificationToRuralEventCategory.mapping";
 import { mapTagToGoogleClassification } from "../mapping/mapTagToGoogleClassification";
 import { GoogleNaturalLanguageClassification } from "../mapping/mapTagToGoogleClassification.mapping";
 
@@ -20,7 +20,7 @@ export const classifyByTag = async (
   }
 
   // map google classification to rural event category by mapGoogleClassificationToRuralEventCategory
-  const ruralEventCategory: RuralEventCategoryId | null =
+  const ruralEventCategory: ClassificationMapping | null =
     await mapGoogleClassificationToRuralEventCategory(googleClassification);
   if (!ruralEventCategory) {
     log.warn(
@@ -31,9 +31,9 @@ export const classifyByTag = async (
   }
 
   const result: RuralEventClassification = {
-    category: ruralEventCategory,
+    category: ruralEventCategory.category,
     tags: [getTag(tag) || tag],
-    classifications: [googleClassification],
+    scope: ruralEventCategory.scope || "nearby",
   };
   return result;
 };

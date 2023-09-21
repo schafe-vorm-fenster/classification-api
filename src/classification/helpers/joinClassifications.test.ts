@@ -6,21 +6,18 @@ describe("joinClassifications", () => {
       {
         category: "community-life",
         tags: ["kirche"],
-        classifications: ["/People & Society/Religion & Belief"],
+        scope: "nearby",
       },
       {
         category: "everyday-supply",
         tags: ["öpNv"],
-        classifications: ["/Travel/Bus & Rail"],
+        scope: "nearby",
       },
     ];
     expect(joinClassifications(classificationList)).toEqual({
       category: "community-life",
       tags: ["kirche", "öpNv"],
-      classifications: [
-        "/People & Society/Religion & Belief",
-        "/Travel/Bus & Rail",
-      ],
+      scope: "nearby",
     });
   });
 });

@@ -12,3 +12,5 @@ export interface OpenAiClassification {
   category: OpenAiCategory;
   relevance: OpenAiScope;
 }
+
+export type OpenAiQuery = object;

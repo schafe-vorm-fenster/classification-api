@@ -1,12 +1,13 @@
 import { RuralEventCategoryId } from "../../packages/rural-event-categories/src/types/ruralEventCategory.types";
-import { GoogleNaturalLanguageClassification } from "../classification/mapping/mapTagToGoogleClassification.mapping";
+import { RuralEventScope } from "../../packages/rural-event-categories/src/types/ruralEventScopes";
 import { HttpErrorBody } from "../errors/error.types";
 
 export interface RuralEventClassification {
   category: RuralEventCategoryId;
   tags: string[];
-  classifications: GoogleNaturalLanguageClassification[];
+  scope: RuralEventScope;
 }
+
 export type ClassificationResponse =
   | RuralEventClassification
   | HttpErrorBody

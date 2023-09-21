@@ -11,9 +11,6 @@ describe("should find a classification?.category for certain tags", () => {
     expect(classification).not.toBeNull();
     expect(classification?.category).toBe("community-life");
     expect(classification?.tags).toContain(tag);
-    expect(classification?.classifications).toContain(
-      "/People & Society/Religion & Belief"
-    );
   });
 
   test("should return 'education-health' for jobs and care tags", async () => {
@@ -24,7 +21,7 @@ describe("should find a classification?.category for certain tags", () => {
     expect(classification).not.toBeNull();
     expect(classification?.category).toBe("education-health");
     expect(classification?.tags).toContain(tag);
-    expect(classification?.classifications).toContain("/Health");
+    expect(classification?.scope).toBe("region");
   });
 
   test("should return 'everyday-supply' for shopping and waste tags", async () => {
@@ -35,9 +32,7 @@ describe("should find a classification?.category for certain tags", () => {
     expect(classification?.tags).toEqual(["Restmüll"]);
     expect(classification?.category).not.toBeNull();
     expect(classification?.category).toBe("everyday-supply");
-    expect(classification?.classifications).toContain(
-      "/Law & Government/Social Services"
-    );
+    expect(classification?.scope).toBe("community");
   });
 
   test("should return 'culture-tourism' for event tags", async () => {
@@ -48,9 +43,7 @@ describe("should find a classification?.category for certain tags", () => {
     expect(classification?.category).not.toBeNull();
     expect(classification?.category).toBe("culture-tourism");
     expect(classification?.tags).toContain(tag);
-    expect(classification?.classifications).toContain(
-      "/Arts & Entertainment/Events & Listings/Concerts & Music Festivals"
-    );
+    expect(classification?.scope).toBe("region");
   });
 
   test("should return null for non existing tag", async () => {
