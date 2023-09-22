@@ -1,6 +1,7 @@
 import getUuidByString from "uuid-by-string";
 import { getLogger } from "../../logging/log-util";
 import { localCache, remoteDatabaseCache } from "./cachemanager";
+import packageJson from "../../package.json" assert { type: "json" };
 
 /**
  * Use a two layer cache.
@@ -18,6 +19,8 @@ export const twoLayerCached = async (
   try {
     const cacheKey =
       "classification-api_" +
+      packageJson.version +
+      "_" +
       cluster +
       "_" +
       getUuidByString(key ? key : String(query));
