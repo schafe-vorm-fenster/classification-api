@@ -16,13 +16,20 @@ interface categoryMapping {
 
 export const categoryMappings: categoryMapping[] = [
   {
-    tags: ["Kirche", "Religion", "Gottesdienst"],
+    tags: ["Kirche", "Religion", "Gottesdienst", "Gottesdienste"],
     section: "/People & Society",
     classification: "/People & Society/Religion & Belief",
+  },
+
+  {
+    tags: ["Gemeindeleben"],
+    section: "/People & Society",
+    classification: "/People & Society",
   },
   {
     tags: [
       "Bildung",
+      "Bildung/Kultur",
       "Schule",
       "Schulung",
       "Schulungen",
@@ -59,7 +66,7 @@ export const categoryMappings: categoryMapping[] = [
       "/People & Society/Social Issues & Advocacy/Charity & Philanthropy",
   },
   {
-    tags: ["Konzerte", "Konzert"],
+    tags: ["Konzerte", "Konzert", "Konzerte/Musik", "Musikveranstaltung"],
     section: "/Arts & Entertainment",
     classification:
       "/Arts & Entertainment/Events & Listings/Concerts & Music Festivals",
@@ -77,6 +84,7 @@ export const categoryMappings: categoryMapping[] = [
       "Gemeindevertretungen",
       "Gremium",
       "Gremien",
+      "Sitzungen/Gremien",
     ],
     section: "/Law & Government",
     classification: "/Law & Government/Government",
