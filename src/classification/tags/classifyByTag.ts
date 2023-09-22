@@ -15,7 +15,7 @@ export const classifyByTag = async (
   const googleClassification: GoogleNaturalLanguageClassification | null =
     await mapTagToGoogleClassification(tag);
   if (!googleClassification) {
-    log.warn({ tag: tag }, "No google classification found for tag");
+    log.warn({ tag: tag }, "No google classification found for tag.");
     return null;
   }
 
@@ -25,7 +25,7 @@ export const classifyByTag = async (
   if (!ruralEventCategory) {
     log.warn(
       { tag: tag, googleClassification: googleClassification },
-      "No rural event category found for google classification"
+      "No rural event category found for google classification."
     );
     return null;
   }

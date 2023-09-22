@@ -5,6 +5,7 @@ import {
   ClassificationResponse,
   RuralEventClassification,
 } from "../../../../src/types/api.types";
+import { HttpErrorBody } from "../../../../src/errors/error.types";
 
 /**
  * @swagger
@@ -43,7 +44,7 @@ export default async function handler(
     return res.status(400).end({
       status: 400,
       message: "Missing tag parameter. Please provide a tag as string.",
-    });
+    } as HttpErrorBody);
 
   // classify by tags
   let classificationByTag: RuralEventClassification | null = null;
@@ -54,9 +55,11 @@ export default async function handler(
   }
 
   if (!classificationByTag) {
-    const message: string = `No category found for tag "${tag}"`;
-    log.info({ tag: tag }, "No category found for tag");
-    return res.status(404).json({ status: 404, message: message });
+    log.info({ tag: tag }, "No classification found for tag");
+    return res.status(404).json({
+      status: 404,
+      message: `No classification found for tag '${tag}'.`,
+    } as HttpErrorBody);
   }
 
   log.debug(

@@ -7,6 +7,7 @@ import {
   ClassificationResponse,
   RuralEventClassification,
 } from "../../../../src/types/api.types";
+import { HttpErrorBody } from "../../../../src/errors/error.types";
 
 /**
  * @swagger
@@ -55,6 +56,19 @@ export default async function handler(
   // reduce to one combined and ranked classification
   const classification: RuralEventClassification =
     reduceClassifications(classificationList);
+
+  log.debug(
+    { check: "debug", classification: classification },
+    "classification"
+  );
+
+  if (!classification) {
+    log.warn({ tagList: tagList }, "No classification found for tagList.");
+    return res.status(404).json({
+      status: 404,
+      message: `No classification found for tags '${tagList.join(",")}'.`,
+    } as HttpErrorBody);
+  }
 
   // add cache header to allow cdn caching of responses
   const cacheMaxAge: string = process.env.CACHE_MAX_AGE || "604800"; // 7 days

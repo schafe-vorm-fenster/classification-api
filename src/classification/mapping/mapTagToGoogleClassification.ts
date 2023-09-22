@@ -20,7 +20,7 @@ export const mapTagToGoogleClassification = (
   if (categoryMapping) {
     return categoryMapping.classification;
   } else {
-    log.warn({ tag: tag }, "No category mapping found for tag");
+    log.warn({ tag: tag }, "No category mapping found for tag.");
     return null;
   }
 };

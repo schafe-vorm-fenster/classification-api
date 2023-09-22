@@ -8,5 +8,5 @@ export function getLogLevel(logger: string): string {
 }
 
 export function getLogger(name: string): Logger {
-  return pino({ name, level: getLogLevel(name) });
+  return pino({ name, level: getLogLevel(name), browser: { asObject: true } });
 }
