@@ -89,6 +89,6 @@ export default async function handler(
   });
 
   return res
-    .status(204)
+    .status(200)
     .json(typedResult || { category: "unknown", scope: "nearby" });
 }
