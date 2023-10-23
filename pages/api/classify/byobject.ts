@@ -75,9 +75,11 @@ export default async function handler(
 
   // convert from OpenAiClassification to Classification
   const typedResult: RuralEventClassification = {
-    category: openAiClassification.category as unknown as RuralEventCategoryId,
+    category:
+      (openAiClassification.category as unknown as RuralEventCategoryId) ||
+      "community-life",
     tags: [],
-    scope: mappedScope as RuralEventScope,
+    scope: (mappedScope as RuralEventScope) || "nearby",
   };
 
   // store some log infos
@@ -87,6 +89,6 @@ export default async function handler(
   });
 
   return res
-    .status(200)
+    .status(204)
     .json(typedResult || { category: "unknown", scope: "nearby" });
 }
