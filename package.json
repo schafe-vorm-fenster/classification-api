@@ -1,7 +1,7 @@
 {
   "name": "classification-api",
   "description": "An API to classify tags or text using custom mappings and Google Cloud Natural Language API.",
-  "version": "2.5.0",
+  "version": "2.5.1",
   "author": {
     "name": "Jan-Henrik Hempel",
     "email": "jan@schafe-vorm-fenster.de"
