@@ -1,4 +1,4 @@
-import { RuralEventCategoryId } from "../../packages/rural-event-categories/src/types/ruralEventCategory.types";
+import { RuralEventCategoryId } from "../../../packages/rural-event-categories/src/types/ruralEventCategory.types";
 
 export type OpenAiCategory = RuralEventCategoryId;
 

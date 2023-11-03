@@ -1,19 +1,16 @@
 import axios from "axios";
-import { getLogger } from "../../logging/log-util";
-import {
-  OpenAiClassification,
-  OpenAiQuery,
-} from "./openAiClassification.types";
-import { classifyByOpenAiPromt } from "./classifyByOpenAi.promt";
+import { getLogger } from "../../../logging/log-util";
+import { OpenAiExtension, OpenAiQuery } from "./openAiExtension.types";
+import { extendByOpenAiPromt } from "./extendByOpenAi.promt";
 
-export const classifyByOpenAi = async (
+export const extendByOpenAi = async (
   content: OpenAiQuery
-): Promise<OpenAiClassification | null> => {
-  const log = getLogger("classifyByOpenAi");
+): Promise<OpenAiExtension | null> => {
+  const log = getLogger("extendByOpenAi");
 
   // combine promt and content
   const fullChatPromt: string =
-    classifyByOpenAiPromt.join("\n\n") + JSON.stringify(content);
+    extendByOpenAiPromt.join("\n\n") + JSON.stringify(content);
 
   // build request body
   const requestBody: object = {
@@ -57,7 +54,7 @@ export const classifyByOpenAi = async (
         // return first choice
         return JSON.parse(
           response.data.choices[0].message.content
-        ) as OpenAiClassification;
+        ) as OpenAiExtension;
       } else {
         log.error(
           "No valid json response from OpenAI.",

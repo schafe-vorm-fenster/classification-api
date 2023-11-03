@@ -1,10 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getLogger } from "../../../logging/log-util";
-import { OpenAiClassification } from "../../../src/openai/openAiClassification.types";
+import { OpenAiClassification } from "../../../src/openai/classify/openAiClassification.types";
 import { RuralEventCategoryId } from "../../../packages/rural-event-categories/src/types/ruralEventCategory.types";
 import { RuralEventScope } from "../../../packages/rural-event-categories/src/types/ruralEventScopes";
-import { classifyByOpenAiCached } from "../../../src/openai/classifyByOpenAi.cached";
+import { classifyByOpenAiCached } from "../../../src/openai/classify/classifyByOpenAi.cached";
 import { RuralEventClassification } from "../../../src/types/api.types";
+import { OpenAiExtension } from "../../../src/openai/extend/openAiExtension.types";
+import { extendByOpenAi } from "../../../src/openai/extend/extendByOpenAi";
 
 /**
  * @swagger
@@ -45,8 +47,19 @@ export default async function handler(
     return res.status(400).end("Please provide a json object to classify.");
   }
 
+  // check if body has enough content, if too short than use classifyByOpenAiCached before
+  let bodyExtension: OpenAiExtension | null = null;
+  if (JSON.stringify(body).length < 150) {
+    log.warn("Incoming request body was too short.");
+    bodyExtension = await extendByOpenAi(body);
+    log.debug({ body, bodyExtension }, "Try to extend the content.");
+  }
+
   const openAiClassification: OpenAiClassification | null =
-    await classifyByOpenAiCached(body);
+    await classifyByOpenAiCached({
+      ...body,
+      details: bodyExtension,
+    });
 
   // return error if no response
   if (!openAiClassification) {

@@ -3,7 +3,7 @@ import {
   OpenAiQuery,
 } from "./openAiClassification.types";
 import { classifyByOpenAi } from "./classifyByOpenAi";
-import { twoLayerCached } from "../cache/twoLayerCached";
+import { twoLayerCached } from "../../cache/twoLayerCached";
 
 export const classifyByOpenAiCached = async (
   query: OpenAiQuery

@@ -10,7 +10,7 @@ export const classifyByOpenAiPromt: string[] = [
   "- 'everyday-supply': Bus, Bahn, Fähre, Brücke, Rufbus, Müll, Bäcker, Bäckerei, Backwaren, Metzger, Supermärkte, Hofläden, Fleischerei, Fleischer, Dorffleischerei",
   "- 'culture-tourism': Konzert, Band, Musik, Ausstellung, Museum, Kino, Tour, Adlertouren, Führung, Försterführungen, Restaurants, Cafes, Markt, Adventsmarkt, Weihnachtsmarkt, Kochen, Backen, Werkstatt, Kinderwerkstatt",
   "Use this context for scope definition:",
-  "- 'tight-nearby': default, relevant for community and society related events and openinghours. Examples: Sport, Sporttraining, Verein, Vereinstreffen, Restaurant, Cafe, Stammtisch, Öffnungszeiten",
+  "- 'tight-nearby': default, relevant for community and society related events and openinghours. Examples: Sport, Sporttraining, Verein, Vereinstreffen, Restaurant, Cafe, Stammtisch, Öffnungszeiten, Bibliothek",
   "- 'wider-region': for education and all cultural and touristic events like Konzert, Band, Musik, Ausstellung, Museum, Kino, Touristische Veranstaltung, Bildung, Vorlshochschulangebot, Forbildung, Workshop, Lesung, Veranstaltung einer Bibliothek, Kinder, Geschichten, Markt, Adventsmarkt, Weihnachtsmarkt",
   "- 'specific-location': for traffic and daily supply like Busfahrplan, Bus, Zug, Müllabholung, Gelbe Tonne, Bäcker, Bäckerei, Bäckerauto, Fleischerauto, Fleischer, Dorffleischerei",
   "- 'formal-municipality': for formal meetings of the municipality. Examples: category like Gemeinde, Gemeindevertretung, Amt, Stadt, Ausschusssitzung, Feuerwehrtreffen, Bürgermeister, Sprechstunde, ALLRIS, Sitzung",
