@@ -98,8 +98,15 @@ export default async function handler(
   // store some log infos
   log.debug({
     request: body,
-    response: typedResult || { category: "unknown", tags: [], scope: "nearby" },
+    response: typedResult,
   });
+
+  if (!typedResult || !typedResult.category || !typedResult.scope) {
+    log.error(
+      { request: body, response: typedResult },
+      "Classification was not successful."
+    );
+  }
 
   return res
     .status(200)
