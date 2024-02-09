@@ -21,7 +21,6 @@ describe("should find a classification?.category for certain tags", () => {
     expect(classification).not.toBeNull();
     expect(classification?.category).toBe("education-health");
     expect(classification?.tags).toContain(tag);
-    expect(classification?.scope).toBe("region");
   });
 
   test("should return 'everyday-supply' for shopping and waste tags", async () => {
@@ -32,7 +31,6 @@ describe("should find a classification?.category for certain tags", () => {
     expect(classification?.tags).toEqual(["Restmüll"]);
     expect(classification?.category).not.toBeNull();
     expect(classification?.category).toBe("everyday-supply");
-    expect(classification?.scope).toBe("community");
   });
 
   test("should return 'culture-tourism' for event tags", async () => {
@@ -43,7 +41,6 @@ describe("should find a classification?.category for certain tags", () => {
     expect(classification?.category).not.toBeNull();
     expect(classification?.category).toBe("culture-tourism");
     expect(classification?.tags).toContain(tag);
-    expect(classification?.scope).toBe("region");
   });
 
   test("should return null for non existing tag", async () => {

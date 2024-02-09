@@ -40,6 +40,6 @@ export const twoLayerCached = async (
     });
   } catch (error: Error | any) {
     log.error(error, error?.message);
-    return null;
+    throw error;
   }
 };

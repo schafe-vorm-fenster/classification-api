@@ -12,15 +12,15 @@ import { extendByOpenAi } from "../../../src/openai/extend/extendByOpenAi";
  * @swagger
  * /api/classify/byobject:
  *   post:
- *     summary: Returns a classification and a scopification for a json object.
- *     description: Based on an incoming json object, a classification and a scopification is returned. For both the open ai api is used to get best results.
+ *     summary: Returns a classification for a json object.
+ *     description: Based on an incoming json object, a classification is returned. For logic open ai api is used to get best results.
  *     tags:
  *       - Classify
  *     produces:
  *       - application/json
  *     responses:
  *       200:
- *         description: Classification and scopification typed as RuralEventClassification.
+ *         description: Classification typed as RuralEventClassification.
  *       400:
  *         description: Missing body or parameters.
  *       401:
@@ -67,32 +67,10 @@ export default async function handler(
     return res.status(404).end("No classification found.");
   }
 
-  let mappedScope: RuralEventScope = "nearby"; // default
-
-  switch (openAiClassification.relevance) {
-    case "tight-nearby":
-      mappedScope = "nearby";
-      break;
-    case "formal-municipality":
-      mappedScope = "municipality";
-      break;
-    case "wider-region":
-      mappedScope = "region";
-      break;
-    case "specific-location":
-      mappedScope = "community";
-      break;
-    default:
-      mappedScope = "nearby";
-  }
-
   // convert from OpenAiClassification to Classification
   const typedResult: RuralEventClassification = {
-    category:
-      (openAiClassification.category as unknown as RuralEventCategoryId) ||
-      "community-life",
-    tags: [],
-    scope: (mappedScope as RuralEventScope) || "nearby",
+    category: openAiClassification.category as unknown as RuralEventCategoryId,
+    tags: openAiClassification.tags || [],
   };
 
   // store some log infos
@@ -101,14 +79,12 @@ export default async function handler(
     response: typedResult,
   });
 
-  if (!typedResult || !typedResult.category || !typedResult.scope) {
+  if (!typedResult || !typedResult.category) {
     log.error(
       { request: body, response: typedResult },
       "Classification was not successful."
     );
   }
 
-  return res
-    .status(200)
-    .json(typedResult || { category: "unknown", scope: "nearby" });
+  return res.status(200).json(typedResult || { category: "unknown", tags: [] });
 }

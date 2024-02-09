@@ -55,6 +55,7 @@ export const classifyByOpenAi = async (
         response.data.choices.length > 0
       ) {
         // return first choice
+        log.info("First choice", response.data.choices[0]);
         return JSON.parse(
           response.data.choices[0].message.content
         ) as OpenAiClassification;

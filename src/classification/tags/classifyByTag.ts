@@ -33,7 +33,6 @@ export const classifyByTag = async (
   const result: RuralEventClassification = {
     category: ruralEventCategory.category,
     tags: [getTag(tag) || tag],
-    scope: ruralEventCategory.scope || "nearby",
   };
   return result;
 };
