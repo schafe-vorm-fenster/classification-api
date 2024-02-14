@@ -1,13 +1,5 @@
-/** @type {import('next').NextConfig} */
-const withTM = require('next-transpile-modules')([
-  'swagger-ui-react',
-  'react-syntax-highlighter',
-  'swagger-client'
-]);
-
-const nextConfig = {
-  reactStrictMode: true,
-  swcMinify: true,
+/** @type {import('next').NextConfig} */const nextConfig = {
+  transpilePackages: ['react-syntax-highlighter', 'swagger-client', 'swagger-ui-react'],
 }
-
-module.exports = withTM(nextConfig);
+  ;
+module.exports = nextConfig;

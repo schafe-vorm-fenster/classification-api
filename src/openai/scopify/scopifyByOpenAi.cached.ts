@@ -3,7 +3,7 @@ import {
   OpenAiScopeification,
 } from "./openAiScopeification.types";
 import { scopifyByOpenAi } from "./scopifyByOpenAi";
-import { twoLayerCached } from "../../cache/twoLayerCached";
+import { twoLayerCached } from "../../cache/twoLayerCache";
 
 export const scopifyByOpenAiCached = async (
   query: OpenAiQuery
