@@ -1,7 +1,7 @@
 {
   "name": "classification-api",
   "description": "API to classify content using ai services.",
-  "version": "2.6.1",
+  "version": "3.0.0",
   "author": {
     "name": "Jan-Henrik Hempel",
     "email": "jan@schafe-vorm-fenster.de"
