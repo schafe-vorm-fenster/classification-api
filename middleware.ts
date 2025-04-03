@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export const config = {
-  matcher: ["/api/classify/:path*", "/api/scopify/:path*"],
+  matcher: ["/api/classify", "/api/scopify"],
 };
 
 export function middleware(req: NextRequest) {

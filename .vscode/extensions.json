@@ -1,6 +1,6 @@
 {
   "recommendations": [
-    "orta.vscode-jest",
+    "vitest.explorer",
     "github.vscode-github-actions",
     "karatelabs.karate"
   ]
